@@ -16,6 +16,6 @@
     "moduleResolution": "node",
     "noLib": false
   },
-  "include": ["lib/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }
