@@ -8,7 +8,8 @@
   },
   "keywords": [
     "Mailjet",
-    "NestJS"
+    "NestJS",
+    "Typescript"
   ],
   "author": "Jérôme Dumas",
   "license": "MIT",
@@ -27,7 +28,7 @@
     "lint": "run-s lint:*",
     "test": "jest --passWithNoTests",
     "format-staged": "pretty-quick --staged",
-    "prepare": "husky install"
+    "prepare": "husky install && npm run build"
   },
   "peerDependencies": {
     "@nestjs/common": ">=7.x.x",
