@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "sourceMap": false,
+    "outDir": "./dist",
+    "incremental": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "noLib": false
+  },
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+}
