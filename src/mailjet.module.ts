@@ -1,10 +1,4 @@
-import {
-  DynamicModule,
-  Global,
-  HttpModule,
-  Module,
-  Provider,
-} from '@nestjs/common';
+import { DynamicModule, HttpModule, Module, Provider } from '@nestjs/common';
 import { MAILJET_MODULE_OPTIONS } from './constants/mailjet.constants';
 import {
   IMailjetModuleAsyncOptions,
@@ -14,7 +8,6 @@ import { IMailjetModuleOptions } from './interfaces/mailjet-module-options.inter
 import { createMailjetProvider } from './mailjet.provider';
 import { MailjetService } from './services/mailjet.service';
 
-@Global()
 @Module({
   imports: [HttpModule],
   providers: [MailjetService],

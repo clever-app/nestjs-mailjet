@@ -26,6 +26,10 @@ export class MailjetService {
       this.options.apiKey,
       this.options.apiSecret
     );
+
+    if (!this.mailClient) {
+      throw new Error('Failed to initialize Mailjet client.');
+    }
   }
 
   public async sendMail(messagesDetail: EmailMessage<any>[]) {
