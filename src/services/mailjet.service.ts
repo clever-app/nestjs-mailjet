@@ -1,5 +1,5 @@
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
-import mailjet, { Email } from 'node-mailjet';
+import mailjet, { ConfigOptions, Email } from 'node-mailjet';
 import { IMailjetModuleOptions } from '../interfaces/mailjet-module-options.interface';
 import { MAILJET_MODULE_OPTIONS } from './../constants/mailjet.constants';
 import { EmailMessage } from './../interfaces/email-message.interface';
@@ -24,7 +24,13 @@ export class MailjetService {
     // instancier la connexion a mailjet
     this.mailClient = mailjet.connect(
       this.options.apiKey,
-      this.options.apiSecret
+      this.options.apiSecret,
+      {
+        // ajout de l'option sandboxMode seulement si l'option est activée
+        ...(!!this.options.sandboxMode && {
+          perform_api_call: this.options.sandboxMode,
+        }),
+      }
     );
 
     if (!this.mailClient) {
@@ -34,8 +40,13 @@ export class MailjetService {
 
   public async sendMail(messagesDetail: EmailMessage<any>[]) {
     let result = null;
+
+    const options: ConfigOptions = {
+      version: 'v3.1',
+    };
+
     try {
-      result = await this.mailClient.post('send', { version: 'v3.1' }).request({
+      result = await this.mailClient.post('send', options).request({
         Messages: messagesDetail,
       });
     } catch (err) {
