@@ -1,22 +1,22 @@
 {
-  "name": "@clever-app/nestjs-mailjet",
+  "name": "@tonightpass/nestjs-mailjet",
   "version": "1.1.0",
   "description": "Mailjet module for NestJS Framework",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clever-app/nestjs-mailjet.git"
+    "url": "git+https://github.com/tonightpass/nestjs-mailjet.git"
   },
   "keywords": [
     "Mailjet",
     "NestJS",
     "Typescript"
   ],
-  "author": "Jérôme Dumas",
+  "author": "Jérémy Baudrin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/clever-app/nestjs-mailjet/issues"
+    "url": "https://github.com/tonightpass/nestjs-mailjet/issues"
   },
-  "homepage": "https://github.com/clever-app/nestjs-mailjet#readme",
+  "homepage": "https://github.com/tonightpass/nestjs-mailjet#readme",
   "main": "./dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
