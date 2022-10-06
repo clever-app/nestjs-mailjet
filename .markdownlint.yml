@@ -15,3 +15,5 @@ line-length: false
 
 no-multiple-blanks: false
 list-marker-space: false
+no-inline-html: false
+first-line-h1: false

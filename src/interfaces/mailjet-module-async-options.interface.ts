@@ -1,5 +1,5 @@
-import { ModuleMetadata, Type } from '@nestjs/common';
-import { IMailjetModuleOptions } from './mailjet-module-options.interface';
+import { ModuleMetadata, Type } from "@nestjs/common";
+import { IMailjetModuleOptions } from "./mailjet-module-options.interface";
 
 export interface IMailjetOptionsFactory {
   createMailjetOptions():
@@ -8,7 +8,7 @@ export interface IMailjetOptionsFactory {
 }
 
 export interface IMailjetModuleAsyncOptions
-  extends Pick<ModuleMetadata, 'imports'> {
+  extends Pick<ModuleMetadata, "imports"> {
   inject?: any[];
   useClass?: Type<IMailjetOptionsFactory>;
   useExisting?: Type<IMailjetOptionsFactory>;

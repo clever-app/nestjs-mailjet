@@ -1,9 +1,8 @@
-import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
-import mailjet, { ConfigOptions, Email } from 'node-mailjet';
-import { Contact } from '../interfaces/contacts/contact.interface';
-import { IMailjetModuleOptions } from '../interfaces/mailjet-module-options.interface';
-import { MAILJET_MODULE_OPTIONS } from './../constants/mailjet.constants';
-import { EmailMessage } from './../interfaces/email-message.interface';
+import { HttpException, Inject, Injectable, Logger } from "@nestjs/common";
+import mailjet, { ConfigOptions, Email } from "node-mailjet";
+import { IMailjetModuleOptions } from "../interfaces/mailjet-module-options.interface";
+import { MAILJET_MODULE_OPTIONS } from "./../constants/mailjet.constants";
+import { MailjetContact, MailjetEmailMessage } from "@tonightpass/shared-types";
 
 @Injectable()
 export class MailjetService {
@@ -32,57 +31,57 @@ export class MailjetService {
     );
 
     if (!this.mailClient) {
-      throw new Error('Failed to initialize Mailjet client.');
+      throw new Error("Failed to initialize Mailjet client.");
     }
   }
 
   public async findContact(id: string | number) {
     const options: ConfigOptions = {
-      version: 'v3',
+      version: "v3",
     };
 
     try {
       const result = await this.mailClient
-        .get('contact', options)
+        .get("contact", options)
         .id(id)
         .request();
       return result;
     } catch (err) {
       this.logger.error(err.message);
-      throw new HttpException('api.error.mailjet', err.statusCode);
+      throw new HttpException("api.error.mailjet", err.statusCode);
     }
   }
 
-  public async addContact(contact: Contact) {
+  public async addContact(contact: MailjetContact) {
     const options: ConfigOptions = {
-      version: 'v3',
+      version: "v3",
     };
 
     try {
       const result = await this.mailClient
-        .post('contact', options)
+        .post("contact", options)
         .request(contact);
       return result;
     } catch (err) {
       this.logger.error(err.message);
-      throw new HttpException('api.error.mailjet', err.statusCode);
+      throw new HttpException("api.error.mailjet", err.statusCode);
     }
   }
 
   public async subscribeContact(
     contactId: string | number,
     listId: string,
-    action: 'addforce' | 'addnoforce' = 'addforce'
+    action: "addforce" | "addnoforce" = "addforce"
   ) {
     const options: ConfigOptions = {
-      version: 'v3',
+      version: "v3",
     };
 
     try {
       const result = await this.mailClient
-        .post('contact', options)
+        .post("contact", options)
         .id(contactId)
-        .action('managecontactslists')
+        .action("managecontactslists")
         .request({
           ContactsLists: [
             {
@@ -94,23 +93,23 @@ export class MailjetService {
       return result;
     } catch (err) {
       this.logger.error(err.message);
-      throw new HttpException('api.error.mailjet', err.statusCode);
+      throw new HttpException("api.error.mailjet", err.statusCode);
     }
   }
 
-  public async sendMail<T>(messagesDetail: EmailMessage<T>[]) {
+  public async sendMail<T>(messagesDetail: MailjetEmailMessage<T>[]) {
     const options: ConfigOptions = {
-      version: 'v3.1',
+      version: "v3.1",
     };
 
     try {
-      const result = await this.mailClient.post('send', options).request({
+      const result = await this.mailClient.post("send", options).request({
         Messages: messagesDetail,
       });
       return result;
     } catch (err) {
       this.logger.error(err.message);
-      throw new HttpException('api.error.mailjet', err.statusCode);
+      throw new HttpException("api.error.mailjet", err.statusCode);
     }
   }
 }
