@@ -14,19 +14,16 @@ export class MailjetService {
     @Inject(MAILJET_MODULE_OPTIONS)
     private readonly options: IMailjetModuleOptions
   ) {
-    // Afficher les options utilisés en mode debug
     this.logger.debug(
       `${MailjetService.name}.options: ${
         this.options ? JSON.stringify(this.options) : null
       }`
     );
 
-    // instancier la connexion a mailjet
     this.mailClient = mailjet.connect(
       this.options.apiKey,
       this.options.apiSecret,
       {
-        // ajout de l'option sandboxMode seulement si l'option est activée
         ...(!!this.options.sandboxMode && {
           perform_api_call: this.options.sandboxMode,
         }),

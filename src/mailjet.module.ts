@@ -1,4 +1,5 @@
-import { DynamicModule, HttpModule, Module, Provider } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { MAILJET_MODULE_OPTIONS } from './constants/mailjet.constants';
 import {
   IMailjetModuleAsyncOptions,
