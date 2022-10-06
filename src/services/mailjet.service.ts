@@ -1,5 +1,6 @@
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import mailjet, { ConfigOptions, Email } from 'node-mailjet';
+import { Contact } from '../interfaces/contacts/contact.interface';
 import { IMailjetModuleOptions } from '../interfaces/mailjet-module-options.interface';
 import { MAILJET_MODULE_OPTIONS } from './../constants/mailjet.constants';
 import { EmailMessage } from './../interfaces/email-message.interface';
@@ -35,21 +36,81 @@ export class MailjetService {
     }
   }
 
-  public async sendMail(messagesDetail: EmailMessage<any>[]) {
-    let result = null;
+  public async findContact(id: string | number) {
+    const options: ConfigOptions = {
+      version: 'v3',
+    };
 
+    try {
+      const result = await this.mailClient
+        .get('contact', options)
+        .id(id)
+        .request();
+      return result;
+    } catch (err) {
+      this.logger.error(err.message);
+      throw new HttpException('api.error.mailjet', err.statusCode);
+    }
+  }
+
+  public async addContact(contact: Contact) {
+    const options: ConfigOptions = {
+      version: 'v3',
+    };
+
+    try {
+      const result = await this.mailClient
+        .post('contact', options)
+        .request(contact);
+      return result;
+    } catch (err) {
+      this.logger.error(err.message);
+      throw new HttpException('api.error.mailjet', err.statusCode);
+    }
+  }
+
+  public async subscribeContact(
+    contactId: string | number,
+    listId: string,
+    action: 'addforce' | 'addnoforce' = 'addforce'
+  ) {
+    const options: ConfigOptions = {
+      version: 'v3',
+    };
+
+    try {
+      const result = await this.mailClient
+        .post('contact', options)
+        .id(contactId)
+        .action('managecontactslists')
+        .request({
+          ContactsLists: [
+            {
+              Action: action,
+              ListID: listId,
+            },
+          ],
+        });
+      return result;
+    } catch (err) {
+      this.logger.error(err.message);
+      throw new HttpException('api.error.mailjet', err.statusCode);
+    }
+  }
+
+  public async sendMail<T>(messagesDetail: EmailMessage<T>[]) {
     const options: ConfigOptions = {
       version: 'v3.1',
     };
 
     try {
-      result = await this.mailClient.post('send', options).request({
+      const result = await this.mailClient.post('send', options).request({
         Messages: messagesDetail,
       });
+      return result;
     } catch (err) {
       this.logger.error(err.message);
       throw new HttpException('api.error.mailjet', err.statusCode);
     }
-    return result;
   }
 }
