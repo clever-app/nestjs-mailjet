@@ -34,6 +34,7 @@
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": ">=8.x.x",
     "@nestjs/core": ">=8.x.x",
+    "@tonightpass/shared-types": ">=0.x.x",
     "@nestjs/platform-express": ">=8.x.x",
     "node-mailjet": ">=5.x.x"
   },
@@ -45,7 +46,6 @@
     "@nestjs/microservices": "8.0.11",
     "@nestjs/platform-express": "8.0.11",
     "@nestjs/testing": "8.0.11",
-    "@tonightpass/shared-types": "../shared-types",
     "@types/jest": "27.0.2",
     "@types/node": "16.10.3",
     "@types/node-mailjet": "3.3.7",
